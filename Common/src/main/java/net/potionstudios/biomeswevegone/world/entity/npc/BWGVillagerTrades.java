@@ -32,7 +32,7 @@ public class BWGVillagerTrades {
 
     public static void makeTrades() {
         if (BWGTradesConfig.INSTANCE.villagerTrades.allowBWGForagerTrades.value())
-            TRADES.put(BWGVillagerProfessions.FORAGER.get(), toIntMap(ImmutableMap.of(
+            TRADES.put(BWGVillagerProfessions.FORAGER, toIntMap(ImmutableMap.of(
                     1, ImmutableList.of(
                             createEmeraldForItemsOffer(Items.RED_MUSHROOM, 10, 12, 2),
                             createEmeraldForItemsOffer(Items.BROWN_MUSHROOM, 10, 12, 2),

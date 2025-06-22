@@ -7,6 +7,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.GlobalPos;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.component.DataComponentGetter;
 import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
@@ -91,9 +92,9 @@ public class PumpkinBurrowBlockEntity extends BlockEntity {
     }
 
     @Override
-    protected void applyImplicitComponents(@NotNull DataComponentInput componentInput) {
-        super.applyImplicitComponents(componentInput);
-        stored = componentInput.getOrDefault(BWGDataComponents.PUMPKIN_WARDEN.get(), Occupant.EMPTY);
+    protected void applyImplicitComponents(@NotNull DataComponentGetter componentGetter) {
+        super.applyImplicitComponents(componentGetter);
+        stored = componentGetter.getOrDefault(BWGDataComponents.PUMPKIN_WARDEN.get(), Occupant.EMPTY);
     }
 
     @Override

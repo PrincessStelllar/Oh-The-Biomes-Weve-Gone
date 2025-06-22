@@ -3,7 +3,6 @@ package net.potionstudios.biomeswevegone.world.entity.npc;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.npc.VillagerType;
 import net.minecraft.world.level.biome.Biome;
 import net.potionstudios.biomeswevegone.BiomesWeveGone;
@@ -11,7 +10,6 @@ import net.potionstudios.biomeswevegone.PlatformHandler;
 import net.potionstudios.biomeswevegone.world.level.levelgen.biome.BWGBiomes;
 
 import java.util.function.BiConsumer;
-import java.util.function.Supplier;
 
 /**
  * Villager types for Oh The Biomes We've Gone
@@ -20,9 +18,9 @@ import java.util.function.Supplier;
  */
 public class BWGVillagerTypes {
 
-	public static final ResourceKey<VillagerType> RED_ROCK = createKey("red_rock");
-	public static final ResourceKey<VillagerType> SALEM = createKey("salem");
-	public static final ResourceKey<VillagerType> SKYRIS = createKey("skyris");
+	public static final ResourceKey<VillagerType> RED_ROCK = register("red_rock");
+	public static final ResourceKey<VillagerType> SALEM = register("salem");
+	public static final ResourceKey<VillagerType> SKYRIS = register("skyris");
 
 	public static void setVillagerBiomes(BiConsumer<ResourceKey<Biome>, ResourceKey<VillagerType>> consumer) {
 		consumer.accept(BWGBiomes.MOJAVE_DESERT, VillagerType.DESERT);
@@ -40,12 +38,9 @@ public class BWGVillagerTypes {
 		consumer.accept(BWGBiomes.WEEPING_WITCH_FOREST, SALEM);
 	}
 
-	private static ResourceKey<VillagerType> createKey(String name) {
-		return BiomesWeveGone.key(Registries.VILLAGER_TYPE, name);
-	}
-
-	private static Supplier<VillagerType> register(String key) {
-		return PlatformHandler.PLATFORM_HANDLER.register(BuiltInRegistries.VILLAGER_TYPE, key, () -> new VillagerType(key));
+	private static ResourceKey<VillagerType> register(String key) {
+		PlatformHandler.PLATFORM_HANDLER.register(BuiltInRegistries.VILLAGER_TYPE, key, VillagerType::new);
+		return BiomesWeveGone.key(Registries.VILLAGER_TYPE, key);
 	}
 
 	public static void villagerTypes() {
