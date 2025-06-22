@@ -38,6 +38,8 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.pathfinder.PathType;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.Vec3;
 import net.potionstudios.biomeswevegone.config.configs.BWGMobSpawnConfig;
 import net.potionstudios.biomeswevegone.world.entity.BWGEntityType;
@@ -234,19 +236,18 @@ public class ManOWar extends Animal implements GeoEntity, Bucketable {
     }
 
     @Override
-    public void addAdditionalSaveData(@NotNull CompoundTag compoundTag) {
-        super.addAdditionalSaveData(compoundTag);
-        compoundTag.putInt("Color", this.getRawColor());
-        compoundTag.putBoolean("FromBucket", this.fromBucket());
+    protected void addAdditionalSaveData(@NotNull ValueOutput valueOutput) {
+        super.addAdditionalSaveData(valueOutput);
+        valueOutput.putInt("Color", this.getRawColor());
+        valueOutput.putBoolean("FromBucket", this.fromBucket());
     }
 
     @Override
-    public void readAdditionalSaveData(@NotNull CompoundTag compoundTag) {
-        super.readAdditionalSaveData(compoundTag);
-        this.setColor(compoundTag.getInt("Color"));
-        this.setFromBucket(compoundTag.getBoolean("FromBucket"));
+    protected void readAdditionalSaveData(@NotNull ValueInput valueInput) {
+        super.readAdditionalSaveData(valueInput);
+        this.setColor(valueInput.getIntOr("Color", 0));
+        this.setFromBucket(valueInput.getBooleanOr("FromBucket", false));
     }
-
 
     @Override
     public void aiStep() {
@@ -404,10 +405,9 @@ public class ManOWar extends Animal implements GeoEntity, Bucketable {
     @Override
     public void loadFromBucketTag(@NotNull CompoundTag tag) {
         Bucketable.loadDefaultDataFromBucketTag(this, tag);
-        this.setColor(Colors.byIndex(tag.getInt("Variant")));
-        if (tag.contains("Age")) {
-            this.setAge(tag.getInt("Age"));
-        }
+        this.setColor(Colors.byIndex(tag.getIntOr("Variant", 0)));
+        if (tag.contains("Age"))
+            this.setAge(tag.getIntOr("Age", 0));
     }
 
     @Override
