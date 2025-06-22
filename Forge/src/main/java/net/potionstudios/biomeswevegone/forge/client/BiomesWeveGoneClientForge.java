@@ -12,7 +12,7 @@ import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.ModelEvent;
 import net.minecraftforge.client.event.RegisterColorHandlersEvent;
 import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
-import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.eventbus.api.bus.BusGroup;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.potionstudios.biomeswevegone.BiomesWeveGone;
 import net.potionstudios.biomeswevegone.client.BiomesWeveGoneClient;
@@ -29,16 +29,18 @@ public class BiomesWeveGoneClientForge {
      * Initializes the client side of the Forge mod.
      * @param eventBus The event bus to register the client side of the mod to.
      */
-    public static void init(final IEventBus eventBus) {
-        eventBus.addListener((FMLClientSetupEvent event) -> {
+    public static void init(final BusGroup eventBus) {
+        FMLClientSetupEvent.getBus(eventBus).addListener((FMLClientSetupEvent event) -> {
             BiomesWeveGoneClient.onInitialize();
             BiomesWeveGoneClient.registerBlockRenderTypes(ItemBlockRenderTypes::setRenderLayer);
         });
-        eventBus.addListener((EntityRenderersEvent.RegisterRenderers event) -> BiomesWeveGoneClient.registerEntityRenderers(event::registerEntityRenderer));
-        eventBus.addListener((EntityRenderersEvent.RegisterRenderers event) -> BiomesWeveGoneClient.registerBlockEntityRenderers(event::registerBlockEntityRenderer));
-        eventBus.addListener((RegisterParticleProvidersEvent event) -> BiomesWeveGoneClient.registerParticles((type, spriteProviderFactory) -> event.registerSpriteSet(type, spriteProviderFactory::apply)));
-        eventBus.addListener((EntityRenderersEvent.RegisterLayerDefinitions event) -> BiomesWeveGoneClient.registerLayerDefinitions(event::registerLayerDefinition));
-        eventBus.addListener((RegisterColorHandlersEvent.Block event) -> BiomesWeveGoneClient.registerBlockColors(event::register));
+        EntityRenderersEvent.RegisterRenderers.getBus(eventBus).addListener((EntityRenderersEvent.RegisterRenderers event) -> {
+            BiomesWeveGoneClient.registerEntityRenderers(event::registerEntityRenderer);
+            BiomesWeveGoneClient.registerBlockEntityRenderers(event::registerBlockEntityRenderer);
+        });
+        RegisterParticleProvidersEvent.getBus(eventBus).addListener((RegisterParticleProvidersEvent event) -> BiomesWeveGoneClient.registerParticles((type, spriteProviderFactory) -> event.registerSpriteSet(type, spriteProviderFactory::apply)));
+        EntityRenderersEvent.RegisterLayerDefinitions.getBus(eventBus).addListener((EntityRenderersEvent.RegisterLayerDefinitions event) -> BiomesWeveGoneClient.registerLayerDefinitions(event::registerLayerDefinition));
+        RegisterColorHandlersEvent.Block.getBus(eventBus).addListener((RegisterColorHandlersEvent.Block event) -> BiomesWeveGoneClient.registerBlockColors(event::register));
         BiomesWeveGoneClient.registerItemTintSources(ItemTintSources.ID_MAPPER::put);
         eventBus.addListener((ModelEvent.RegisterModelStateDefinitions event) -> BiomesWeveGoneClient.registerAdditionalModels((modelLocation) -> event.register(BiomesWeveGone.id(modelLocation), new StateDefinition.Builder<Block, BlockState>(Blocks.AIR).create(Block::defaultBlockState, BlockState::new))));
     }
