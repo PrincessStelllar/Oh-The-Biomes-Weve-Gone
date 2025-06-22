@@ -53,7 +53,7 @@ dependencies {
 
     modLocalRuntime("me.djtheredstoner:DevAuth-forge-latest:${project.properties["devauth_version"]}")
 
-    modApi("com.github.glitchfiend:TerraBlender-forge:1.21.5-${project.properties["terrablender_version"]}")
+    modApi("com.github.glitchfiend:TerraBlender-forge:$minecraftVersion-${project.properties["terrablender_version"]}")
     modApi("corgitaco.corgilib:Corgilib-Forge:1.21.4-${project.properties["corgilib_version"]}")
     modApi("dev.corgitaco:Oh-The-Trees-Youll-Grow-forge:1.21.4-${project.properties["ohthetreesyoullgrow_version"]}")
     modApi("software.bernie.geckolib:geckolib-forge-$minecraftVersion:${project.properties["geckolib_version"]}")

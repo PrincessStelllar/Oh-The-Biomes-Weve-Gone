@@ -46,7 +46,7 @@ dependencies {
 
     modLocalRuntime("me.djtheredstoner:DevAuth-neoforge:${project.properties["devauth_version"]}")
 
-    modApi("com.github.glitchfiend:TerraBlender-neoforge:1.21.5-${project.properties["terrablender_version"]}")
+    modApi("com.github.glitchfiend:TerraBlender-neoforge:$minecraftVersion-${project.properties["terrablender_version"]}")
     modApi("corgitaco.corgilib:Corgilib-NeoForge:1.21.4-${project.properties["corgilib_version"]}")
     modApi("dev.corgitaco:Oh-The-Trees-Youll-Grow-neoforge:1.21.4-${project.properties["ohthetreesyoullgrow_version"]}")
     modApi("software.bernie.geckolib:geckolib-neoforge-$minecraftVersion:${project.properties["geckolib_version"]}")
