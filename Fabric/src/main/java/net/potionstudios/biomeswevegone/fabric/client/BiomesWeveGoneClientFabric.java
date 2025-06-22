@@ -3,9 +3,9 @@ package net.potionstudios.biomeswevegone.fabric.client;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.model.loading.v1.ModelLoadingPlugin;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
+import net.fabricmc.fabric.api.client.rendering.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
@@ -25,7 +25,7 @@ public class BiomesWeveGoneClientFabric implements ClientModInitializer, ModelLo
     @Override
     public void onInitializeClient() {
         BiomesWeveGoneClient.onInitialize();
-        BiomesWeveGoneClient.registerBlockRenderTypes(BlockRenderLayerMap.INSTANCE::putBlock);
+        BiomesWeveGoneClient.registerBlockRenderTypes(BlockRenderLayerMap::putBlock);
         BiomesWeveGoneClient.registerEntityRenderers(EntityRendererRegistry::register);
         BiomesWeveGoneClient.registerBlockEntityRenderers(BlockEntityRenderers::register);
         BiomesWeveGoneClient.registerParticles((type, spriteProviderFactory) -> ParticleFactoryRegistry.getInstance().register(type, spriteProviderFactory::apply));

@@ -1,7 +1,9 @@
 package net.potionstudios.biomeswevegone.world.entity.npc;
 
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.npc.VillagerType;
 import net.minecraft.world.level.biome.Biome;
 import net.potionstudios.biomeswevegone.BiomesWeveGone;
@@ -18,11 +20,11 @@ import java.util.function.Supplier;
  */
 public class BWGVillagerTypes {
 
-	public static final Supplier<VillagerType> RED_ROCK = register("red_rock");
-	public static final Supplier<VillagerType> SALEM = register("salem");
-	public static final Supplier<VillagerType> SKYRIS = register("skyris");
+	public static final ResourceKey<VillagerType> RED_ROCK = createKey("red_rock");
+	public static final ResourceKey<VillagerType> SALEM = createKey("salem");
+	public static final ResourceKey<VillagerType> SKYRIS = createKey("skyris");
 
-	public static void setVillagerBiomes(BiConsumer<ResourceKey<Biome>, VillagerType> consumer) {
+	public static void setVillagerBiomes(BiConsumer<ResourceKey<Biome>, ResourceKey<VillagerType>> consumer) {
 		consumer.accept(BWGBiomes.MOJAVE_DESERT, VillagerType.DESERT);
 		consumer.accept(BWGBiomes.WINDSWEPT_DESERT, VillagerType.DESERT);
 		consumer.accept(BWGBiomes.TROPICAL_RAINFOREST, VillagerType.JUNGLE);
@@ -32,10 +34,14 @@ public class BWGVillagerTypes {
 		consumer.accept(BWGBiomes.CYPRESS_WETLANDS, VillagerType.SWAMP);
 		consumer.accept(BWGBiomes.BAYOU, VillagerType.SWAMP);
 		consumer.accept(BWGBiomes.PALE_BOG, VillagerType.SWAMP);
-		consumer.accept(BWGBiomes.RED_ROCK_VALLEY, RED_ROCK.get());
-		consumer.accept(BWGBiomes.RED_ROCK_PEAKS, RED_ROCK.get());
-		consumer.accept(BWGBiomes.SKYRIS_VALE, SKYRIS.get());
-		consumer.accept(BWGBiomes.WEEPING_WITCH_FOREST, SALEM.get());
+		consumer.accept(BWGBiomes.RED_ROCK_VALLEY, RED_ROCK);
+		consumer.accept(BWGBiomes.RED_ROCK_PEAKS, RED_ROCK);
+		consumer.accept(BWGBiomes.SKYRIS_VALE, SKYRIS);
+		consumer.accept(BWGBiomes.WEEPING_WITCH_FOREST, SALEM);
+	}
+
+	private static ResourceKey<VillagerType> createKey(String name) {
+		return BiomesWeveGone.key(Registries.VILLAGER_TYPE, name);
 	}
 
 	private static Supplier<VillagerType> register(String key) {

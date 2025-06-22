@@ -46,9 +46,9 @@ dependencies {
 
     modLocalRuntime("me.djtheredstoner:DevAuth-neoforge:${project.properties["devauth_version"]}")
 
-    modApi("com.github.glitchfiend:TerraBlender-neoforge:$minecraftVersion-${project.properties["terrablender_version"]}")
-    modApi("corgitaco.corgilib:Corgilib-NeoForge:$minecraftVersion-${project.properties["corgilib_version"]}")
-    modApi("dev.corgitaco:Oh-The-Trees-Youll-Grow-neoforge:$minecraftVersion-${project.properties["ohthetreesyoullgrow_version"]}")
+    modApi("com.github.glitchfiend:TerraBlender-neoforge:1.21.5-${project.properties["terrablender_version"]}")
+    modApi("corgitaco.corgilib:Corgilib-NeoForge:1.21.4-${project.properties["corgilib_version"]}")
+    modApi("dev.corgitaco:Oh-The-Trees-Youll-Grow-neoforge:1.21.4-${project.properties["ohthetreesyoullgrow_version"]}")
     modApi("software.bernie.geckolib:geckolib-neoforge-$minecraftVersion:${project.properties["geckolib_version"]}")
     compileOnly("net.luckperms:api:5.4")
 
@@ -56,7 +56,7 @@ dependencies {
     modLocalRuntime("mcp.mobius.waila:wthit:neo-${project.properties["WTHIT"]}")
     modLocalRuntime("lol.bai:badpackets:neo-${project.properties["badPackets"]}")
 
-    modApi("com.github.glitchfiend:SereneSeasons-neoforge:$minecraftVersion-10.4.0.6")
+    modApi("com.github.glitchfiend:SereneSeasons-neoforge:1.21.5-10.5.0.1")
 
     //modLocalRuntime("com.github.Jab125.architectury-data-generation-fix:architectury-data-generation-fix-neoforge:21.0.3")
 }

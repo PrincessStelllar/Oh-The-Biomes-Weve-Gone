@@ -35,7 +35,7 @@
   ],
   "depends": {
     "fabric": "*",
-    "minecraft": ">=1.21.4",
+    "minecraft": ">=1.21.6",
     "terrablender": ">=4.3.0.2",
     "corgilib": ">=6.0.0.0",
     "ohthetreesyoullgrow": ">=6.0.4",

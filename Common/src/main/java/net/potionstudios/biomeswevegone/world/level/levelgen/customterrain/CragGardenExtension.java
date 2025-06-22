@@ -70,7 +70,7 @@ public class CragGardenExtension {
                     }
 
 
-                    chunk.setBlockState(mutable, state, false);
+                    chunk.setBlockState(mutable, state);
                 }
             }
         }

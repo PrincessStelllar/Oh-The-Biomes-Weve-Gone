@@ -191,22 +191,22 @@ public class LargeLakePiece extends StructurePiece {
             mutableBlockPos.set(blockX, y, blockZ);
 
             if (y == depth - 1) {
-                chunk.setBlockState(mutableBlockPos, Blocks.STONE.defaultBlockState(), false);
+                chunk.setBlockState(mutableBlockPos, Blocks.STONE.defaultBlockState());
             } else if (y <= depth + 3) {
 
                 if (y < waterGenY) {
-                    chunk.setBlockState(mutableBlockPos, stateProvider.getState(random, mutableBlockPos), false);
+                    chunk.setBlockState(mutableBlockPos, stateProvider.getState(random, mutableBlockPos));
                 } else {
-                    chunk.setBlockState(mutableBlockPos, topBlocks[Math.min(origin.getY() - y, topBlocks.length - 1)], false);
+                    chunk.setBlockState(mutableBlockPos, topBlocks[Math.min(origin.getY() - y, topBlocks.length - 1)]);
                     ((RandomTickScheduler) chunk).scheduleRandomTick(mutableBlockPos.immutable());
                     chunk.markPosForPostprocessing(mutableBlockPos);
                 }
 
             } else if (y > waterGenY) {
-                chunk.setBlockState(mutableBlockPos, Blocks.AIR.defaultBlockState(), false);
+                chunk.setBlockState(mutableBlockPos, Blocks.AIR.defaultBlockState());
             } else {
                 placedWater = true;
-                chunk.setBlockState(mutableBlockPos, Blocks.WATER.defaultBlockState(), false);
+                chunk.setBlockState(mutableBlockPos, Blocks.WATER.defaultBlockState());
                 worldGenLevel.scheduleTick(mutableBlockPos.immutable(), Fluids.WATER, 0);
             }
             unsafeBoundingBox.encapsulate(mutableBlockPos);
@@ -228,13 +228,13 @@ public class LargeLakePiece extends StructurePiece {
         if (origin.getY() >= worldSurfaceY) {
             for (int y = worldSurfaceY; y <= height; y++) {
                 mutableBlockPos.set(blockX, y, blockZ);
-                chunk.setBlockState(mutableBlockPos, topBlocks[topBlocks.length  -1], false);
+                chunk.setBlockState(mutableBlockPos, topBlocks[topBlocks.length  -1]);
                 unsafeBoundingBox.encapsulate(mutableBlockPos);
             }
         } else {
             for (int y = worldSurfaceY; y > height; y--) {
                 mutableBlockPos.set(blockX, y, blockZ);
-                chunk.setBlockState(mutableBlockPos, Blocks.AIR.defaultBlockState(), false);
+                chunk.setBlockState(mutableBlockPos, Blocks.AIR.defaultBlockState());
                 unsafeBoundingBox.encapsulate(mutableBlockPos);
             }
         }
@@ -242,7 +242,7 @@ public class LargeLakePiece extends StructurePiece {
         for (int y = 0; y < topBlocks.length; y++) {
             mutableBlockPos.set(blockX, height - y, blockZ);
 
-            chunk.setBlockState(mutableBlockPos, topBlocks[y], false);
+            chunk.setBlockState(mutableBlockPos, topBlocks[y]);
 
             ((RandomTickScheduler) chunk).scheduleRandomTick(mutableBlockPos.immutable());
             chunk.markPosForPostprocessing(mutableBlockPos);

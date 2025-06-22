@@ -5,6 +5,7 @@ import corgitaco.corgilib.math.blendingfunction.BlendingFunction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.random.SimpleWeightedRandomList;
+import net.minecraft.util.random.WeightedList;
 import net.minecraft.util.valueproviders.ConstantFloat;
 import net.minecraft.util.valueproviders.UniformFloat;
 import net.minecraft.util.valueproviders.UniformInt;
@@ -80,11 +81,11 @@ public class BWGOverworldConfiguredFeatures {
                                                     new RandomChancePredicate(ConstantFloat.of(0.4F)),
                                                     BlockPredicate.anyOf(BWGWorldGenerationUtil.blockMatchesInAllDirections(blockPos -> BlockPredicate.matchesBlocks(blockPos, Blocks.AIR, Blocks.CAVE_AIR)))
                                             ),
-                                            new WeightedStateProvider(new SimpleWeightedRandomList.Builder<BlockState>().add(Blocks.MOSS_BLOCK.defaultBlockState(), 1).add(Blocks.MOSSY_COBBLESTONE.defaultBlockState(), 2))
+                                            new WeightedStateProvider(new WeightedList.Builder<BlockState>().add(Blocks.MOSS_BLOCK.defaultBlockState(), 1).add(Blocks.MOSSY_COBBLESTONE.defaultBlockState(), 2))
                                     )
                             )
                     ),
-                    SimpleWeightedRandomList.single(BlendingFunction.EaseOutCubic.INSTANCE) // TODO: We need to configure the exponent by adding a config option in CorgiLib
+                    WeightedList.of(BlendingFunction.EaseOutCubic.INSTANCE) // TODO: We need to configure the exponent by adding a config option in CorgiLib
             )
     );
 
@@ -101,7 +102,7 @@ public class BWGOverworldConfiguredFeatures {
                                                     new RandomChancePredicate(ConstantFloat.of(0.4F)),
                                                     BlockPredicate.anyOf(BWGWorldGenerationUtil.blockMatchesInAllDirections(blockPos -> BlockPredicate.matchesBlocks(blockPos, Blocks.AIR, Blocks.CAVE_AIR, Blocks.WATER)))
                                             ),
-                                            new WeightedStateProvider(new SimpleWeightedRandomList.Builder<BlockState>().add(Blocks.DRIPSTONE_BLOCK.defaultBlockState(), 1))
+                                            new WeightedStateProvider(new WeightedList.Builder<BlockState>().add(Blocks.DRIPSTONE_BLOCK.defaultBlockState(), 1))
                                     )
                             )
                     ),
