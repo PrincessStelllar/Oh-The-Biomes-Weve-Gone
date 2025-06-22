@@ -57,7 +57,7 @@ class BWGOverworldBiomes {
     }
 
     private static void addSpawn(MobSpawnSettings.Builder builder, EntityType<?> entityType, int weight, int minGroupSize, int maxGroupSize) {
-        builder.addSpawn(entityType.getCategory(), new MobSpawnSettings.SpawnerData(entityType, weight, minGroupSize, maxGroupSize));
+        builder.addSpawn(entityType.getCategory(), weight, new MobSpawnSettings.SpawnerData(entityType, minGroupSize, maxGroupSize));
     }
 
     protected static Biome alliumShrubland(HolderGetter<PlacedFeature> placedFeatureGetter, HolderGetter<ConfiguredWorldCarver<?>> carverGetter) {
