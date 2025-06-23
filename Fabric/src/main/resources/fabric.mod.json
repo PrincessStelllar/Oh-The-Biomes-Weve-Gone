@@ -36,10 +36,10 @@
   "depends": {
     "fabric": "*",
     "minecraft": ">=1.21.6",
-    "terrablender": ">=4.3.0.2",
+    "terrablender": ">=6.0.0.0",
     "corgilib": ">=6.0.0.0",
-    "ohthetreesyoullgrow": ">=6.0.4",
-    "geckolib": ">=4.8.4"
+    "ohthetreesyoullgrow": ">=7.0.0",
+    "geckolib": ">=5.2.9"
   },
   "suggests": {
     "WTHIT": ">=14.1.4"

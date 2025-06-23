@@ -48,7 +48,7 @@ dependencies {
 
     modApi("com.github.glitchfiend:TerraBlender-neoforge:$minecraftVersion-${project.properties["terrablender_version"]}")
     modApi("corgitaco.corgilib:Corgilib-NeoForge:1.21.4-${project.properties["corgilib_version"]}")
-    modApi("dev.corgitaco:Oh-The-Trees-Youll-Grow-neoforge:1.21.4-${project.properties["ohthetreesyoullgrow_version"]}")
+    modApi("dev.corgitaco:Oh-The-Trees-Youll-Grow-neoforge:$minecraftVersion-${project.properties["ohthetreesyoullgrow_version"]}")
     modApi("software.bernie.geckolib:geckolib-neoforge-$minecraftVersion:${project.properties["geckolib_version"]}")
     compileOnly("net.luckperms:api:5.4")
 
