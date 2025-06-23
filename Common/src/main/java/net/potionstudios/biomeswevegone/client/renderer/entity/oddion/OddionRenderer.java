@@ -5,7 +5,6 @@ import net.potionstudios.biomeswevegone.world.entity.oddion.Oddion;
 import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib.renderer.GeoEntityRenderer;
 
-
 /**
  * Oddion Entity Renderer
  * @see GeoEntityRenderer
@@ -20,5 +19,11 @@ public class OddionRenderer extends GeoEntityRenderer<Oddion, OddionRenderState>
     @Override
     protected float getShadowRadius(@NotNull OddionRenderState renderState) {
         return 0.4F;
+    }
+
+    @Override
+    public void extractRenderState(@NotNull Oddion entity, @NotNull OddionRenderState entityRenderState, float partialTick) {
+        super.extractRenderState(entity, entityRenderState, partialTick);
+        entityRenderState.variant = entity.getVariant();
     }
 }

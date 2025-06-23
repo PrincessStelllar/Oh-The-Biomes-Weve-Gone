@@ -10,6 +10,7 @@ import java.util.Map;
 
 public class ManOWarRenderState extends EntityRenderState implements GeoRenderState {
     public ManOWar.Colors color;
+    public boolean baby;
     @Override
     public <D> void addGeckolibData(DataTicket<D> dataTicket, @Nullable D data) {
 

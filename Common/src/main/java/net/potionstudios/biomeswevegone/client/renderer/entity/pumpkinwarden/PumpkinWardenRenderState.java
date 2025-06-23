@@ -1,6 +1,7 @@
 package net.potionstudios.biomeswevegone.client.renderer.entity.pumpkinwarden;
 
 import net.minecraft.client.renderer.entity.state.EntityRenderState;
+import net.minecraft.world.item.ItemStack;
 import net.potionstudios.biomeswevegone.world.entity.pumpkinwarden.PumpkinWarden;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.constant.dataticket.DataTicket;
@@ -11,6 +12,7 @@ import java.util.Map;
 public class PumpkinWardenRenderState extends EntityRenderState implements GeoRenderState {
     public PumpkinWarden.Variant variant;
     public boolean hiding;
+    public ItemStack itemStack;
     @Override
     public <D> void addGeckolibData(DataTicket<D> dataTicket, @Nullable D data) {
 
