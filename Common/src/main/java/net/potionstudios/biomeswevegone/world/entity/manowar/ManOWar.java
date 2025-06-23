@@ -46,12 +46,11 @@ import net.potionstudios.biomeswevegone.world.entity.BWGEntityType;
 import net.potionstudios.biomeswevegone.world.item.BWGItems;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import software.bernie.geckolib.animatable.GeoAnimatable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.animatable.manager.AnimatableManager;
 import software.bernie.geckolib.animatable.processing.AnimationController;
-import software.bernie.geckolib.animatable.processing.AnimationState;
+import software.bernie.geckolib.animatable.processing.AnimationTest;
 import software.bernie.geckolib.animation.*;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
@@ -97,7 +96,7 @@ public class ManOWar extends Animal implements GeoEntity, Bucketable {
     }
 
     protected void handleAirSupply(int air) {
-        if (this.isAlive() && !this.isInWaterOrBubble()) {
+        if (this.isAlive() && !this.isInWater()) {
             this.setAirSupply(air - 1);
             if (this.getAirSupply() == -20) {
                 this.setAirSupply(0);
@@ -158,7 +157,7 @@ public class ManOWar extends Animal implements GeoEntity, Bucketable {
 
     @Override
     public void playerTouch(@NotNull Player player) {
-        if (player instanceof ServerPlayer serverPlayer && serverPlayer.hurtServer(serverPlayer.serverLevel(), serverPlayer.damageSources().mobAttack(this), (float) (1))) {
+        if (player instanceof ServerPlayer serverPlayer && serverPlayer.hurtServer(serverPlayer.level(), serverPlayer.damageSources().mobAttack(this), (float) (1))) {
             RandomSource rand = player.getRandom();
             int i = rand.nextInt(4);
             if (i <= 2) {
@@ -167,7 +166,7 @@ public class ManOWar extends Animal implements GeoEntity, Bucketable {
                 serverPlayer.addEffect(new MobEffectInstance(MobEffects.POISON, 200), this);
             }
             if (serverPlayer.hasEffect(MobEffects.UNLUCK)) {
-                serverPlayer.kill(serverPlayer.serverLevel());
+                serverPlayer.kill(serverPlayer.level());
             }
         }
     }
@@ -277,7 +276,7 @@ public class ManOWar extends Animal implements GeoEntity, Bucketable {
             }
         }
 
-        if (this.isInWaterOrBubble()) {
+        if (this.isInWater()) {
             if (this.tentacleMovement < 3.1415927F) {
                 float f = this.tentacleMovement / 3.1415927F;
                 this.tentacleAngle = Mth.sin(f * f * 3.1415927F) * 3.1415927F * 0.25F;
@@ -345,7 +344,7 @@ public class ManOWar extends Animal implements GeoEntity, Bucketable {
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
-        controllerRegistrar.add(new AnimationController<>(this, "controller", 0, this::predicate));
+        controllerRegistrar.add(new AnimationController<>("controller", 0, this::predicate));
     }
 
     @Override
@@ -356,8 +355,8 @@ public class ManOWar extends Animal implements GeoEntity, Bucketable {
     private static final RawAnimation SWIM_ANIMATION = RawAnimation.begin().thenPlay("animation.man_o_war.swim");
     private static final RawAnimation BEACHED_ANIMATION = RawAnimation.begin().thenPlay("animation.man_o_war.beached");
 
-    private <E extends GeoAnimatable> PlayState predicate(AnimationState<E> event) {
-        AnimationController<E> controller = event.getController();
+    private PlayState predicate(AnimationTest<ManOWar> event) {
+        AnimationController<ManOWar> controller = event.controller();
         controller.transitionLength(0);
         controller.setAnimation(this.isInWater() ? SWIM_ANIMATION : BEACHED_ANIMATION);
         return PlayState.CONTINUE;

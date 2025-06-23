@@ -40,12 +40,11 @@ import net.potionstudios.biomeswevegone.world.entity.BWGEntityType;
 import net.potionstudios.biomeswevegone.world.item.BWGItems;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import software.bernie.geckolib.animatable.GeoAnimatable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.animation.AnimatableManager;
-import software.bernie.geckolib.animation.AnimationController;
-import software.bernie.geckolib.animation.AnimationState;
+import software.bernie.geckolib.animatable.manager.AnimatableManager;
+import software.bernie.geckolib.animatable.processing.AnimationController;
+import software.bernie.geckolib.animatable.processing.AnimationTest;
 import software.bernie.geckolib.animation.PlayState;
 import software.bernie.geckolib.animation.RawAnimation;
 import software.bernie.geckolib.util.GeckoLibUtil;
@@ -139,7 +138,7 @@ public class Oddion extends PathfinderMob implements GeoEntity, VariantHolder<Od
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-        controllers.add(new AnimationController<>(this, "controller", 0, this::predicate));
+        controllers.add(new AnimationController<>("controller", 0, this::predicate));
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -256,7 +255,7 @@ public class Oddion extends PathfinderMob implements GeoEntity, VariantHolder<Od
             this.goalSelector.addGoal(1, movementGoal);
     }
 
-    private <E extends GeoAnimatable> PlayState predicate(AnimationState<E> event) {
+    private PlayState predicate(AnimationTest<Oddion> event) {
         if (isGrounded()) {
             return event.setAndContinue(GROUND);
         }

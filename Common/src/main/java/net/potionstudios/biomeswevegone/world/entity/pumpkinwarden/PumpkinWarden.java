@@ -38,7 +38,6 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.memory.MemoryStatus;
-import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 import net.minecraft.world.entity.ai.sensing.Sensor;
 import net.minecraft.world.entity.ai.sensing.SensorType;
 import net.minecraft.world.entity.ai.village.poi.PoiManager;
@@ -68,11 +67,12 @@ import net.potionstudios.biomeswevegone.world.level.block.BWGBlocks;
 import net.potionstudios.biomeswevegone.world.level.block.entities.PumpkinBurrowBlockEntity;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import software.bernie.geckolib.animatable.GeoAnimatable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.animatable.manager.AnimatableManager;
+import software.bernie.geckolib.animatable.processing.AnimationController;
+import software.bernie.geckolib.animatable.processing.AnimationTest;
 import software.bernie.geckolib.animation.*;
-import software.bernie.geckolib.animation.AnimationState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.Map;
@@ -135,7 +135,7 @@ public class PumpkinWarden extends PathfinderMob implements GeoEntity, VariantHo
         super(entityType, level);
         setPathfindingMalus(PathType.DANGER_FIRE, 16.0F);
         setPathfindingMalus(PathType.DAMAGE_FIRE, -1.0F);
-        ((GroundPathNavigation)getNavigation()).setCanOpenDoors(true);
+        getNavigation().setCanOpenDoors(true);
         getNavigation().setCanFloat(true);
     }
 
@@ -239,7 +239,7 @@ public class PumpkinWarden extends PathfinderMob implements GeoEntity, VariantHo
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
-        controllerRegistrar.add(new AnimationController<>(this, "controller", 0, this::predicate)
+        controllerRegistrar.add(new AnimationController<>("controller", 0, this::predicate)
                 .triggerableAnim("hide_start", HIDE_START)
                 .triggerableAnim("hide_end", HIDE_END));
     }
@@ -259,10 +259,10 @@ public class PumpkinWarden extends PathfinderMob implements GeoEntity, VariantHo
     private static final RawAnimation WAVE = RawAnimation.begin().thenPlay("animation.pumpkinwarden.wave");
 
 
-    private <E extends GeoAnimatable> PlayState predicate(@NotNull AnimationState<E> event) {
-        event.getController().transitionLength(0);
+    private PlayState predicate(@NotNull AnimationTest<PumpkinWarden> event) {
+        event.controller().transitionLength(0);
         if (isHiding())
-            if (event.getController().hasAnimationFinished())
+            if (event.controller().hasAnimationFinished())
                 return event.setAndContinue(HIDE);
             else return PlayState.CONTINUE;
 
@@ -270,11 +270,10 @@ public class PumpkinWarden extends PathfinderMob implements GeoEntity, VariantHo
             if (event.isMoving())
                 return event.setAndContinue(HOLDING_WALKING);
             return event.setAndContinue(HOLDING_IDLE);
-        } else if (event.isMoving()) {
+        } else if (event.isMoving())
             return event.setAndContinue(WALKING);
-        } else if (this.party) {
+        else if (this.party)
             return event.setAndContinue(WAVE);
-        }
         return event.setAndContinue(IDLE);
     }
 
@@ -373,9 +372,9 @@ public class PumpkinWarden extends PathfinderMob implements GeoEntity, VariantHo
     }
 
     @Override
-    protected float tickHeadTurn(float yRot, float animStep) {
-        if (isHiding()) return 0;
-        return super.tickHeadTurn(yRot, animStep);
+    protected void tickHeadTurn(float yBodyRot) {
+        if (isHiding()) return;
+        super.tickHeadTurn(yBodyRot);
     }
 
     @Override

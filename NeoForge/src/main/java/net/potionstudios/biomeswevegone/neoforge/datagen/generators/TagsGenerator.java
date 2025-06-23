@@ -39,8 +39,8 @@ import java.util.concurrent.CompletableFuture;
 public class TagsGenerator {
 
     public static void init(DataGenerator generator, boolean run, PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider) {
-        BlockTagGenerator BlockTags = generator.addProvider(run, new BlockTagGenerator(output, lookupProvider));
-        generator.addProvider(run, new ItemTagGenerator(output, lookupProvider, BlockTags));
+        generator.addProvider(run, new BlockTagGenerator(output, lookupProvider));
+        generator.addProvider(run, new ItemTagGenerator(output, lookupProvider));
         generator.addProvider(run, new BiomeTagGenerator(output, lookupProvider));
         generator.addProvider(run, new StructureTagGenerator(output, lookupProvider));
         generator.addProvider(run, new EntityTypeTagGenerator(output, lookupProvider));
@@ -255,8 +255,8 @@ public class TagsGenerator {
      */
     private static class ItemTagGenerator extends ItemTagsProvider {
 
-        private ItemTagGenerator(PackOutput arg, CompletableFuture<HolderLookup.Provider> completableFuture, BlockTagGenerator blockTagGenerator) {
-            super(arg, completableFuture, blockTagGenerator.contentsGetter(), BiomesWeveGone.MOD_ID);
+        private ItemTagGenerator(PackOutput arg, CompletableFuture<HolderLookup.Provider> completableFuture) {
+            super(arg, completableFuture, BiomesWeveGone.MOD_ID);
         }
 
         @SuppressWarnings("DataFlowIssue")
