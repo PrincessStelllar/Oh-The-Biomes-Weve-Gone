@@ -12,7 +12,6 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.core.Direction;
 import net.minecraft.world.phys.Vec3;
-import net.potionstudios.biomeswevegone.client.renderer.entity.state.WreathRenderState;
 import net.potionstudios.biomeswevegone.world.entity.decoration.Wreath;
 import org.jetbrains.annotations.NotNull;
 

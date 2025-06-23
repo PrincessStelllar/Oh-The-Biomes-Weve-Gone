@@ -3,6 +3,7 @@ package net.potionstudios.biomeswevegone.client.renderer.entity.oddion;
 import net.minecraft.resources.ResourceLocation;
 import net.potionstudios.biomeswevegone.BiomesWeveGone;
 import net.potionstudios.biomeswevegone.world.entity.oddion.Oddion;
+import software.bernie.geckolib.constant.DataTickets;
 import software.bernie.geckolib.model.GeoModel;
 import software.bernie.geckolib.renderer.base.GeoRenderState;
 
@@ -11,7 +12,7 @@ import software.bernie.geckolib.renderer.base.GeoRenderState;
  * @see GeoModel
  * @author YaBoiChips, Joseph T. McQuigg
  */
-class OddionModel<T extends Oddion> extends GeoModel<T> {
+class OddionModel extends GeoModel<Oddion> {
 
     @Override
     public ResourceLocation getModelResource(GeoRenderState renderState) {
@@ -20,11 +21,12 @@ class OddionModel<T extends Oddion> extends GeoModel<T> {
 
     @Override
     public ResourceLocation getTextureResource(GeoRenderState renderState) {
-        return BiomesWeveGone.id("textures/entity/oddion/" + oddion.getVariant().getName() + ".png");
+        OddionRenderState oddionRenderState = (OddionRenderState) renderState;
+        return BiomesWeveGone.id("textures/entity/oddion/" + oddionRenderState.variant.getName() + ".png");
     }
 
     @Override
-    public ResourceLocation getAnimationResource(T oddion) {
+    public ResourceLocation getAnimationResource(Oddion animatable) {
         return BiomesWeveGone.id("animations/oddion.animation.json");
     }
 }

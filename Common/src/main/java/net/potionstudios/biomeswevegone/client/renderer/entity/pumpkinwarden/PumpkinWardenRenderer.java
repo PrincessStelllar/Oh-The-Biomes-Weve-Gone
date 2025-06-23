@@ -21,7 +21,7 @@ import software.bernie.geckolib.renderer.GeoEntityRenderer;
  * @see GeoEntityRenderer
  * @author YaBoiChips
  */
-public class PumpkinWardenRenderer<T extends PumpkinWarden> extends GeoEntityRenderer<T> {
+public class PumpkinWardenRenderer extends GeoEntityRenderer<PumpkinWarden, PumpkinWardenRenderState> {
 
     public PumpkinWardenRenderer(EntityRendererProvider.Context context) {
         super(context, new PumpkinWardenModel<>());

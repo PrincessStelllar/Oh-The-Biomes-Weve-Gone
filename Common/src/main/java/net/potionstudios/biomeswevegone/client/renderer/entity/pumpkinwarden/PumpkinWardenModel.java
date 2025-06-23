@@ -3,13 +3,10 @@ package net.potionstudios.biomeswevegone.client.renderer.entity.pumpkinwarden;
 import net.minecraft.resources.ResourceLocation;
 import net.potionstudios.biomeswevegone.BiomesWeveGone;
 import net.potionstudios.biomeswevegone.world.entity.pumpkinwarden.PumpkinWarden;
-import org.jetbrains.annotations.Nullable;
-import software.bernie.geckolib.animation.AnimationState;
+import software.bernie.geckolib.animatable.processing.AnimationState;
 import software.bernie.geckolib.cache.object.GeoBone;
-import software.bernie.geckolib.constant.DataTickets;
 import software.bernie.geckolib.model.GeoModel;
-import software.bernie.geckolib.model.data.EntityModelData;
-import software.bernie.geckolib.renderer.GeoRenderer;
+import software.bernie.geckolib.renderer.base.GeoRenderState;
 
 /**
  * Pumpkin Warden Model
@@ -19,13 +16,14 @@ import software.bernie.geckolib.renderer.GeoRenderer;
 class PumpkinWardenModel<T extends PumpkinWarden> extends GeoModel<T> {
 
     @Override
-    public ResourceLocation getModelResource(T pumpkinWarden, @Nullable GeoRenderer<T> renderer) {
+    public ResourceLocation getModelResource(GeoRenderState renderState) {
         return BiomesWeveGone.id("geo/pumpkinwarden.geo.json");
     }
 
     @Override
-    public ResourceLocation getTextureResource(T pumpkinWarden, @Nullable GeoRenderer<T> renderer) {
-        return pumpkinWarden.isHiding() ? BiomesWeveGone.id("textures/entity/pumpkin_warden/" + pumpkinWarden.getVariant().getName() + "_hiding.png") : BiomesWeveGone.id("textures/entity/pumpkin_warden/" + pumpkinWarden.getVariant().getName() + ".png");
+    public ResourceLocation getTextureResource(GeoRenderState renderState) {
+        PumpkinWardenRenderState pumpkinWardenRenderState = ((PumpkinWardenRenderState) renderState);
+        return pumpkinWardenRenderState.hiding ? BiomesWeveGone.id("textures/entity/pumpkin_warden/" + pumpkinWardenRenderState.variant.getName() + "_hiding.png") : BiomesWeveGone.id("textures/entity/pumpkin_warden/" + pumpkinWardenRenderState.variant.getName() + ".png");
     }
 
     @Override
@@ -34,11 +32,11 @@ class PumpkinWardenModel<T extends PumpkinWarden> extends GeoModel<T> {
     }
 
     @Override
-    public void setCustomAnimations(T pumpkinWarden, long uniqueID, AnimationState<T> customPredicate) {
-        super.setCustomAnimations(pumpkinWarden, uniqueID, customPredicate);
+    public void setCustomAnimations(AnimationState<T> animationState) {
+        super.setCustomAnimations(animationState);
         GeoBone head = this.getAnimationProcessor().getBone("Head");
-        EntityModelData extraData = customPredicate.getData(DataTickets.ENTITY_MODEL_DATA);
-        head.setPivotX(extraData.headPitch() * ((float) Math.PI / 180F));
-        head.setPivotY(extraData.netHeadYaw() * ((float) Math.PI / 180F));
+        //EntityModelData extraData = customPredicate.getData(DataTickets.ENTITY_MODEL_DATA);
+        //head.setPivotX(extraData.headPitch() * ((float) Math.PI / 180F));
+        //head.setPivotY(extraData.netHeadYaw() * ((float) Math.PI / 180F));
     }
 }
