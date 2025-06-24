@@ -28,7 +28,6 @@ import net.potionstudios.biomeswevegone.world.item.brewing.BWGBrewingRecipes;
 import net.potionstudios.biomeswevegone.world.item.tools.ToolInteractions;
 import net.potionstudios.biomeswevegone.world.level.block.BWGBlocks;
 import net.potionstudios.biomeswevegone.world.level.block.BlockFeatures;
-import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.HashMap;
 import java.util.List;
@@ -108,7 +107,7 @@ public class VanillaCompatForge {
      * @see WandererTradesEvent
      */
     private static void onWanderingTrade(final WandererTradesEvent event) {
-        BWGVillagerTrades.WANDERING_TRADER_TRADES.forEach((level, offers) -> event.getPools().add(new WandererTradesEvent.Pool(Pair.of(offers.toArray(new VillagerTrades.ItemListing[0]), level))));
+        BWGVillagerTrades.WANDERING_TRADER_TRADES.forEach((level, offers) -> event.getPools().add(new WandererTradesEvent.Pool(offers, level)));
     }
 
     /**
