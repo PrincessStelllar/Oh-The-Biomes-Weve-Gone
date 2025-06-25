@@ -58,7 +58,7 @@ import java.util.function.IntFunction;
  * @see PathfinderMob
  * @see GeoEntity
  */
-public class Oddion extends PathfinderMob implements GeoEntity, VariantHolder<Oddion.Variant> {
+public class Oddion extends PathfinderMob implements GeoEntity {
 
     private final AnimatableInstanceCache animatableInstanceCache = GeckoLibUtil.createInstanceCache(this);
 
@@ -339,10 +339,7 @@ public class Oddion extends PathfinderMob implements GeoEntity, VariantHolder<Od
         return getPetTime() > 0;
     }
 
-    @Override
-    public void setVariant(@NotNull Variant variant) {
-        this.entityData.set(DATA_VARIANT, variant.getId());
-    }
+
 
     @Override
     public @NotNull EntityDimensions getDimensions(@NotNull Pose pose) {
@@ -350,7 +347,10 @@ public class Oddion extends PathfinderMob implements GeoEntity, VariantHolder<Od
         return super.getDimensions(pose);
     }
 
-    @Override
+    public void setVariant(@NotNull Variant variant) {
+        this.entityData.set(DATA_VARIANT, variant.getId());
+    }
+
     public @NotNull Variant getVariant() {
         return Variant.byId(this.entityData.get(DATA_VARIANT));
     }

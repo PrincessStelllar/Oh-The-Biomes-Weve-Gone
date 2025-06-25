@@ -86,7 +86,7 @@ import java.util.function.IntFunction;
  * @see GeoEntity
  * @author JT122406
  */
-public class PumpkinWarden extends PathfinderMob implements GeoEntity, VariantHolder<PumpkinWarden.Variant> {
+public class PumpkinWarden extends PathfinderMob implements GeoEntity {
 
     private final AnimatableInstanceCache animatableInstanceCache = GeckoLibUtil.createInstanceCache(this);
     private BlockPos jukebox;
@@ -409,12 +409,10 @@ public class PumpkinWarden extends PathfinderMob implements GeoEntity, VariantHo
         entityData.set(HIDING, flag);
     }
 
-    @Override
     public void setVariant(@NotNull Variant variant) {
         this.entityData.set(DATA_VARIANT, variant.getId());
     }
 
-    @Override
     public @NotNull Variant getVariant() {
         return Variant.byId(this.entityData.get(DATA_VARIANT));
     }

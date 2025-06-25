@@ -16,7 +16,6 @@ import net.minecraft.util.ByIdMap;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.VariantHolder;
 import net.minecraft.world.entity.decoration.HangingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -37,7 +36,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.function.IntFunction;
 import java.util.function.Supplier;
 
-public class Wreath extends HangingEntity implements VariantHolder<Wreath.Type> {
+public class Wreath extends HangingEntity {
 	private static final EntityDataAccessor<Integer> DATA_ID_TYPE = SynchedEntityData.defineId(Wreath.class, EntityDataSerializers.INT);
 
 	public Wreath(EntityType<? extends HangingEntity> entityType, Level level) {
@@ -138,12 +137,10 @@ public class Wreath extends HangingEntity implements VariantHolder<Wreath.Type> 
 		return Component.translatable(getVariant().getItem().getDescriptionId());
 	}
 
-	@Override
 	public void setVariant(@NotNull Type variant) {
 		entityData.set(DATA_ID_TYPE, variant.ordinal());
 	}
 
-	@Override
 	public @NotNull Type getVariant() {
 		return Type.byId(entityData.get(DATA_ID_TYPE));
 	}
