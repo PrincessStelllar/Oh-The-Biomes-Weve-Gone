@@ -8,7 +8,6 @@ import net.minecraft.core.SectionPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
-import net.minecraft.nbt.NbtUtils;
 import net.minecraft.nbt.Tag;
 import net.minecraft.resources.RegistryOps;
 import net.minecraft.util.Mth;
@@ -34,6 +33,7 @@ import net.minecraft.world.level.levelgen.structure.StructurePiece;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;
 import net.minecraft.world.level.levelgen.synth.ImprovedNoise;
 import net.minecraft.world.level.material.Fluids;
+import net.potionstudios.biomeswevegone.util.BWGUtil;
 import net.potionstudios.biomeswevegone.util.UnsafeBoundingBox;
 import net.potionstudios.biomeswevegone.world.level.levelgen.structure.BWGStructurePieceTypes;
 import org.apache.commons.lang3.mutable.MutableBoolean;
@@ -62,16 +62,16 @@ public class LargeLakePiece extends StructurePiece {
 
     public LargeLakePiece(StructurePieceSerializationContext context, CompoundTag tag) {
         super(BWGStructurePieceTypes.LARGE_LAKE.get(), tag);
-        this.origin = NbtUtils.readBlockPos(tag, "origin").orElseThrow();
-        this.radius = tag.getInt("radius");
-        this.lakeDepth = tag.getInt("lakeDepth");
+        this.origin = BWGUtil.readBlockPos(tag, "origin").orElseThrow();
+        this.radius = tag.getIntOr("radius", 0);
+        this.lakeDepth = tag.getIntOr("lakeDepth", 0);
         RegistryOps<Tag> tagRegistryOps = RegistryOps.create(NbtOps.INSTANCE, context.registryAccess());
         this.lakeFeatures = PlacedFeature.LIST_CODEC.decode(tagRegistryOps, tag.get("lake_features")).getOrThrow().getFirst();
     }
 
     @Override
     protected void addAdditionalSaveData(StructurePieceSerializationContext context, CompoundTag tag) {
-        tag.put("origin", NbtUtils.writeBlockPos(this.origin));
+        tag.put("origin", BWGUtil.writeBlockPos(this.origin));
         tag.putInt("radius", this.radius);
         tag.putInt("lakeDepth", this.lakeDepth);
         RegistryOps<Tag> tagRegistryOps = RegistryOps.create(NbtOps.INSTANCE, context.registryAccess());
