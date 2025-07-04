@@ -1,5 +1,5 @@
 # 4.0.0
-- Update to 1.21.6
+- Update to 1.21.7
 
 # 3.1.2
 - Fix Misc and Mob Spawn Configs not generating sometimes
