@@ -323,14 +323,14 @@ public class ModelGenerator extends ModelProvider {
                                         )
                         ));
             } else if (b instanceof HydrangeaHedgeBlock) {
-                blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(b, ModelLocationUtils.getModelLocation(b)));
+                blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(b, BlockModelGenerators.plainVariant(ModelLocationUtils.getModelLocation(b))));
                 blockItemModel(blockModels, b);
             } else if (b instanceof FlowerBlock || b instanceof BoneMealGrassBlock || b instanceof MushroomBlock || b instanceof ShrubBlock || b instanceof BWGPlacementBushBlock) {
                 blockModels.createTrivialBlock(b, TexturedModel.createDefault(TextureMapping::cross, ModelTemplates.CROSS).updateTexture(textureMapping -> textureMapping.put(TextureSlot.CROSS, TextureMapping.getBlockTexture(b))));
                 itemModels.itemModelOutput.accept(b.asItem(), ItemModelUtils.plainModel(ModelTemplates.FLAT_ITEM.create(b.asItem(), TextureMapping.layer0(TextureMapping.getBlockTexture(b)), itemModels.modelOutput)));
             } else if (b instanceof FlowerPotBlock flowerPotBlock) {
                 if (flowerPotBlock == BWGBlocks.WHITE_PUFFBALL.getPottedBlock())
-                    blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(flowerPotBlock, ModelLocationUtils.getModelLocation(b)));
+                    blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(flowerPotBlock, BlockModelGenerators.plainVariant(ModelLocationUtils.getModelLocation(b))));
                 else blockModels.createTrivialBlock(flowerPotBlock, TexturedModel.createDefault(TextureMapping::cross, ModelTemplates.FLOWER_POT_CROSS).updateTexture(textureMapping -> textureMapping.put(TextureSlot.PLANT, ModelLocationUtils.getModelLocation(flowerPotBlock.getPotted()))));
             } else if (b instanceof WaterlilyBlock || b instanceof CattailSproutBlock) {
                 blockModels.blockStateOutput.accept(BlockModelGenerators.createRotatedVariant(b, ModelLocationUtils.getModelLocation(b)));
@@ -351,7 +351,7 @@ public class ModelGenerator extends ModelProvider {
             } else if (b  instanceof BWGFarmLandBlock farmLandBlock) {
                 createFarmland(blockModels, farmLandBlock);
                 blockItemModel(blockModels, b);
-            } else if (b instanceof PinkPetalsBlock)
+            } else if (b instanceof FlowerBedBlock)
                 createFlowerBed(blockModels, b);
             else if (b instanceof BushBlock && (!(b instanceof FlatVegetationBlock))) {
                 blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(b, BlockModelGenerators.plainVariant(ModelLocationUtils.getModelLocation(b))));
@@ -370,7 +370,7 @@ public class ModelGenerator extends ModelProvider {
         blockItemModel(blockModels, BWGBlocks.CATTAIL_THATCH_CARPET.get());
 
         TextureMapping textureMapping = TextureMapping.column(BWGBlocks.PALE_PUMPKIN.get());
-        blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(BWGBlocks.PALE_PUMPKIN.get(), ModelLocationUtils.getModelLocation(BWGBlocks.PALE_PUMPKIN.get())));
+        blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(BWGBlocks.PALE_PUMPKIN.get(), BlockModelGenerators.plainVariant(ModelLocationUtils.getModelLocation(BWGBlocks.PALE_PUMPKIN.get()))));
         blockModels.blockStateOutput.accept(MultiVariantGenerator.multiVariant(BWGBlocks.CARVED_PALE_PUMPKIN.get(), Variant.variant().with(VariantProperties.MODEL, ModelTemplates.CUBE_ORIENTABLE.create(BWGBlocks.CARVED_PALE_PUMPKIN.get(), textureMapping.copyAndUpdate(TextureSlot.FRONT, TextureMapping.getBlockTexture(BWGBlocks.CARVED_PALE_PUMPKIN.get())), blockModels.modelOutput))).with(BlockModelGenerators.createHorizontalFacingDispatch()));
         blockModels.blockStateOutput.accept(MultiVariantGenerator.multiVariant(BWGBlocks.PALE_JACK_O_LANTERN.get(), Variant.variant().with(VariantProperties.MODEL, ModelTemplates.CUBE_ORIENTABLE.create(BWGBlocks.PALE_JACK_O_LANTERN.get(), textureMapping.copyAndUpdate(TextureSlot.FRONT, TextureMapping.getBlockTexture(BWGBlocks.PALE_JACK_O_LANTERN.get())), blockModels.modelOutput))).with(BlockModelGenerators.createHorizontalFacingDispatch()));
         blockItemModel(blockModels, BWGBlocks.PALE_PUMPKIN.get());
@@ -385,9 +385,9 @@ public class ModelGenerator extends ModelProvider {
                 .with(PropertyDispatch.property(PumpkinBurrowBlock.OCCUPIED).select(false, Variant.variant().with(VariantProperties.MODEL, unoccupiedModel)).select(true, Variant.variant().with(VariantProperties.MODEL, occupiedModel))));
 
 
-        blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(BWGBlocks.WITCH_HAZEL_BLOSSOM.get(), ModelLocationUtils.getModelLocation(BWGBlocks.WITCH_HAZEL_BLOSSOM.get())));
+        blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(BWGBlocks.WITCH_HAZEL_BLOSSOM.get(), BlockModelGenerators.plainVariant(ModelLocationUtils.getModelLocation(BWGBlocks.WITCH_HAZEL_BLOSSOM.get()))));
         blockItemModel(blockModels, BWGBlocks.WITCH_HAZEL_BLOSSOM.get());
-        blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(BWGWood.SPIRIT_ROOTS.get(), ModelLocationUtils.getModelLocation(BWGWood.SPIRIT_ROOTS.get())));
+        blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(BWGWood.SPIRIT_ROOTS.get(), BlockModelGenerators.plainVariant(ModelLocationUtils.getModelLocation(BWGWood.SPIRIT_ROOTS.get()))));
         blockItemModel(blockModels, BWGWood.SPIRIT_ROOTS.get());
 
         BWGSandSet.getSandSets().forEach(bwgSandSet -> {
@@ -547,7 +547,7 @@ public class ModelGenerator extends ModelProvider {
     private static void createSlab(BlockModelGenerators blockModels, ItemModelGenerators itemModels, Block slab, Block baseBlock, TextureMapping baseTexture) {
         ResourceLocation slabBottom = ModelTemplates.SLAB_BOTTOM.create(slab, baseTexture, blockModels.modelOutput);
         ResourceLocation slabTop = ModelTemplates.SLAB_TOP.create(slab, baseTexture, blockModels.modelOutput);
-        blockModels.blockStateOutput.accept(BlockModelGenerators.createSlab(slab, slabBottom, slabTop, ModelLocationUtils.getModelLocation(baseBlock)));
+        blockModels.blockStateOutput.accept(BlockModelGenerators.createSlab(slab, BlockModelGenerators.plainVariant(slabBottom), BlockModelGenerators.plainVariant(slabTop), BlockModelGenerators.plainVariant(ModelLocationUtils.getModelLocation(baseBlock))));
         itemModels.itemModelOutput.accept(slab.asItem(), ItemModelUtils.plainModel(slabBottom));
     }
 
@@ -555,7 +555,7 @@ public class ModelGenerator extends ModelProvider {
         ResourceLocation stairsStraight = ModelTemplates.STAIRS_STRAIGHT.create(stairs, baseTexture, blockModels.modelOutput);
         ResourceLocation stairsInner = ModelTemplates.STAIRS_INNER.create(stairs, baseTexture, blockModels.modelOutput);
         ResourceLocation stairsOuter = ModelTemplates.STAIRS_OUTER.create(stairs, baseTexture, blockModels.modelOutput);
-        blockModels.blockStateOutput.accept(BlockModelGenerators.createStairs(stairs, stairsInner, stairsStraight, stairsOuter));
+        blockModels.blockStateOutput.accept(BlockModelGenerators.createStairs(stairs, BlockModelGenerators.plainVariant(stairsInner), BlockModelGenerators.plainVariant(stairsStraight), BlockModelGenerators.plainVariant(stairsOuter)));
         itemModels.itemModelOutput.accept(stairs.asItem(), ItemModelUtils.plainModel(stairsStraight));
     }
 
@@ -570,7 +570,7 @@ public class ModelGenerator extends ModelProvider {
         ResourceLocation wallSide = ModelTemplates.WALL_LOW_SIDE.create(wall, base, blockModels.modelOutput);
         ResourceLocation wallSideTall = ModelTemplates.WALL_TALL_SIDE.create(wall, base, blockModels.modelOutput);
         ResourceLocation wallInventory = ModelTemplates.WALL_INVENTORY.create(wall, base, blockModels.modelOutput);
-        blockModels.blockStateOutput.accept(BlockModelGenerators.createWall(wall, wallPost, wallSide, wallSideTall));
+        blockModels.blockStateOutput.accept(BlockModelGenerators.createWall(wall, BlockModelGenerators.plainVariant(wallPost), BlockModelGenerators.plainVariant(wallSide), BlockModelGenerators.plainVariant(wallSideTall)));
         itemModels.itemModelOutput.accept(wall.asItem(), ItemModelUtils.plainModel(wallInventory));
     }
 
